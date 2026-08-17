@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ziccon Health Monitor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header class="header">
+    <div>
+      <h1>❤️ Ziccon Health</h1>
+      <p>Personal Health Monitoring</p>
+    </div>
+    <button class="emergency-btn" onclick="showEmergency()">Emergency</button>
+  </header>
+
+  <main class="container">
+
+    <section class="welcome">
+      <h2>Monitor Your Health</h2>
+      <p>Enter your health readings to get a general indication of your current status.</p>
+      <div class="warning">
+        ⚠️ This app is for informational purposes only and does not replace a qualified healthcare professional.
+      </div>
+    </section>
+
+    <!-- Health Cards -->
+    <section class="health-grid">
+
+      <div class="health-card">
+        <div class="icon">🩸</div>
+        <h3>Blood Pressure</h3>
+
+        <div class="input-row">
+          <input type="number" id="systolic" placeholder="Systolic">
+          <span>/</span>
+          <input type="number" id="diastolic" placeholder="Diastolic">
+        </div>
+
+        <small>mmHg</small>
+        <p id="bpResult" class="result">No reading</p>
+      </div>
+
+      <div class="health-card">
+        <div class="icon">🍬</div>
+        <h3>Blood Sugar</h3>
+
+        <input type="number" id="sugar" placeholder="Enter reading">
+        <select id="sugarType">
+          <option value="fasting">Fasting</option>
+          <option value="random">Random</option>
+        </select>
+
+        <small>mg/dL</small>
+        <p id="sugarResult" class="result">No reading</p>
+      </div>
+
+      <div class="health-card">
+        <div class="icon">❤️</div>
+        <h3>Pulse Rate</h3>
+
+        <input type="number" id="pulse" placeholder="Enter BPM">
+        <small>BPM</small>
+
+        <p id="pulseResult" class="result">No reading</p>
+      </div>
+
+      <div class="health-card">
+        <div class="icon">🌡️</div>
+        <h3>Temperature</h3>
+
+        <input type="number" id="temperature" step="0.1" placeholder="Enter °C">
+        <small>°C</small>
+
+        <p id="tempResult" class="result">No reading</p>
+      </div>
+
+      <div class="health-card">
+        <div class="icon">⚖️</div>
+        <h3>BMI Calculator</h3>
+
+        <div class="input-row">
+          <input type="number" id="weight" placeholder="Weight kg">
+          <input type="number" id="height" placeholder="Height cm">
+        </div>
+
+        <button class="small-btn" onclick="calculateBMI()">Calculate BMI</button>
+
+        <p id="bmiResult" class="result">No reading</p>
+      </div>
+
+    </section>
+
+    <!-- Analyze Button -->
+    <section class="analyze-section">
+      <button class="analyze-btn" onclick="analyzeHealth()">
+        🔍 Analyze My Health
+      </button>
+    </section>
+
+    <!-- Overall Status -->
+    <section class="status-panel">
+      <h2>Health Status</h2>
+      <div id="overallStatus" class="status neutral">
+        Enter your readings and click "Analyze My Health".
+      </div>
+    </section>
+
+    <!-- Health Alerts -->
+    <section>
+      <h2 class="section-title">Health Information</h2>
+
+      <div class="info-grid">
+
+        <div class="info-card">
+          <h3>🩸 Blood Pressure</h3>
+          <p>
+            Blood pressure measures the force of blood against your artery walls.
+            Consistently abnormal readings should be discussed with a healthcare professional.
+          </p>
+        </div>
+
+        <div class="info-card">
+          <h3>🍬 Blood Sugar</h3>
+          <p>
+            Blood glucose levels can vary depending on meals, medications and other
+            factors. Repeated abnormal readings require professional evaluation.
+          </p>
+        </div>
+
+        <div class="info-card">
+          <h3>❤️ Pulse</h3>
+          <p>
+            Pulse rate is the number of heartbeats per minute. A person's normal
+            resting pulse can vary depending on age, fitness and other factors.
+          </p>
+        </div>
+
+        <div class="info-card">
+          <h3>🌡️ Temperature</h3>
+          <p>
+            An elevated temperature may occur with infection or other conditions.
+            Consider other symptoms when deciding whether to seek medical attention.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Medical Issues -->
+    <section class="issues">
+      <h2 class="section-title">Potential Medical Issues</h2>
+
+      <div class="issue-list">
+
+        <button onclick="showIssue('hypertension')">
+          <span>🩸</span>
+          <div>
+            <strong>High Blood Pressure</strong>
+            <small>Learn about warning signs</small>
+          </div>
+        </button>
+
+        <button onclick="showIssue('diabetes')">
+          <span>🍬</span>
+          <div>
+            <strong>High Blood Sugar</strong>
+            <small>Learn about possible symptoms</small>
+          </div>
+        </button>
+
+        <button onclick="showIssue('heart')">
+          <span>❤️</span>
+          <div>
+            <strong>Heart-Related Symptoms</strong>
+            <small>Know when to seek urgent help</small>
+          </div>
+        </button>
+
+        <button onclick="showIssue('fever')">
+          <span>🌡️</span>
+          <div>
+            <strong>Fever</strong>
+            <small>Understand possible causes</small>
+          </div>
+        </button>
+
+      </div>
+    </section>
+
+    <!-- History -->
+    <section class="history">
+      <div class="history-header">
+        <h2 class="section-title">Reading History</h2>
+        <button class="clear-btn" onclick="clearHistory()">Clear</button>
+      </div>
+
+      <div id="historyList">
+        <p class="empty">No readings saved yet.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <button class="close" onclick="closeModal()">×</button>
+      <h2 id="modalTitle"></h2>
+      <p id="modalText"></p>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Ziccon Health Monitor</p>
+    <p>For educational and monitoring purposes only.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
